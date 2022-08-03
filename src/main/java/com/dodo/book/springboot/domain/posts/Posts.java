@@ -38,5 +38,13 @@ public class Posts {
         this.content = content;
         this.author =author;
     }
-
+    /**
+        JPA의 엔티티매니저가 활성화된 상태로  트랜잭션안에서 데이터베이스에서 데이터를 가져오면 이데이터는 영속성 컨텍스트가 유지된 상태기 때문에
+        해당데이터의 값을 변경하면  트랜잭션이 끝나는 시점에 해당 테이블에 변경분을 반영한다.
+        즉, 엔티티 객체의 값만 변경하면 별도로 update 쿼리를 날릴 필요가 없다 -> 더티체킹
+     */
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
