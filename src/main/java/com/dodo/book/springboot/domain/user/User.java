@@ -1,18 +1,15 @@
 package com.dodo.book.springboot.domain.user;
-
 import com.dodo.book.springboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
 @Entity
 public class User extends BaseTimeEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +23,7 @@ public class User extends BaseTimeEntity {
     @Column
     private String picture;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)  //(1)
     @Column(nullable = false)
     private Role role;
 
@@ -39,14 +36,14 @@ public class User extends BaseTimeEntity {
     }
 
     public User update(String name, String picture){
-        this.name = name;
+        this.name= name;
         this.picture = picture;
+
         return this;
     }
-    public String getRoleKey() {
+
+    public String getRoleKey(){
         return this.role.getKey();
     }
-
-
 
 }
