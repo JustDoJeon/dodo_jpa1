@@ -2,7 +2,7 @@ package com.dodo.book.springboot.config.auth;
 
 import com.dodo.book.springboot.config.auth.dto.OAuthAttributes;
 import com.dodo.book.springboot.config.auth.dto.SessionUser;
-import com.dodo.book.springboot.domain.user.User;
+import com.dodo.book.springboot.domain.user.Users;
 import com.dodo.book.springboot.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -35,15 +35,15 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        User user = saveOrUpdate(attributes);
+        Users user = saveOrUpdate(attributes);
         httpSession.setAttribute("user",new SessionUser(user));
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())), attributes.getAttributes(), attributes.getNameAttributeKey() );
 
     }
 
-    private User saveOrUpdate(OAuthAttributes attributes){
-        User user = userRepository.findByEmail(attributes.getEmail())
+    private Users saveOrUpdate(OAuthAttributes attributes){
+        Users user = userRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
 
